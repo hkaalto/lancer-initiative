@@ -6,25 +6,6 @@ type Appearance = typeof LancerCombatTracker["trackerAppearance"];
 const module = "lancer-initiative";
 const templatePath = "modules/lancer-initiative/templates/lancer-combat-tracker.html";
 
-function migrateSettings(): void {
-  if (<number>game.settings.get(module, "combat-tracker-migrated-settings") >= 1) return;
-
-  console.log("lancer-initiative | Migrating Settings");
-
-  game.settings.set(
-    module,
-    "combat-tracker-appearance",
-    <Appearance>game.settings.get(module, "appearance")
-  );
-  game.settings.set(module, "combat-tracker-sort", <boolean>game.settings.get(module, "sort"));
-  game.settings.set(
-    module,
-    "combat-tracker-enable-initiative",
-    <boolean>game.settings.get(module, "enable-initiative")
-  );
-  game.settings.set(module, "combat-tracker-migrated-settings", 1);
-}
-
 function registerSettings(): void {
   console.log("lancer-initiative | Initializing Lancer Initiative Module");
   const config = LancerCombatTracker.trackerConfig;
@@ -77,26 +58,7 @@ function registerSettings(): void {
     scope: "world",
     config: false,
     type: Number,
-    default: 0,
-  });
-
-  // Old settings to be migrated
-  game.settings.register(module, "appearance", {
-    scope: "world",
-    config: false,
-    type: Object,
-  });
-  game.settings.register(module, "sort", {
-    scope: "world",
-    config: false,
-    type: Boolean,
-    default: false,
-  });
-  game.settings.register(module, "enable-initiative", {
-    scope: "world",
-    config: false,
-    type: Boolean,
-    default: false,
+    default: 1,
   });
 
   // Override classes
@@ -141,4 +103,3 @@ function setAppearance(val: Partial<Appearance>): void {
 }
 
 Hooks.once("init", registerSettings);
-Hooks.once("ready", migrateSettings);
