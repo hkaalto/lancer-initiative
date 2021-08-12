@@ -1,9 +1,9 @@
 import { LancerCombatTracker } from "./module/lancer-combat-tracker";
 
 declare global {
- interface LenientGlobalVariableTypes {
-   game: never;
- }
+  interface LenientGlobalVariableTypes {
+    game: never;
+  }
 
   namespace ClientSettings {
     interface Values {
